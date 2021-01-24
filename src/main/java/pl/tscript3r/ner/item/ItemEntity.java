@@ -1,4 +1,4 @@
-package pl.tscript3r.ner.items;
+package pl.tscript3r.ner.item;
 
 import lombok.Setter;
 import lombok.ToString;

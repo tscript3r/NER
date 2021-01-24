@@ -7,11 +7,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static pl.tscript3r.ner.migrate.Mappers.*;
+
 @Slf4j
 public class Migrate {
 
     public static final String CLIENTS_TABLE = "Kunden";
     public static final String ITEMS_TABLE = "Teile";
+    public static final String ORDERS_TABLE = "Arbeitsaufträge";
     private final TableMigrate tableMigrate;
 
     private Migrate(Connection connection, Progress progress) {
@@ -29,8 +32,9 @@ public class Migrate {
     }
 
     public void migrate() throws SQLException {
-        tableMigrate.migrate(CLIENTS_TABLE, Mappers.clientEntityMapper, System.out::println);
-        tableMigrate.migrate(ITEMS_TABLE, Mappers.itemEntityMapper, System.out::println);
+        tableMigrate.migrate(CLIENTS_TABLE, clientEntityMapper, System.out::println);
+        tableMigrate.migrate(ITEMS_TABLE, itemEntityMapper, System.out::println);
+        tableMigrate.migrate(ORDERS_TABLE, orderEntityMapper, System.out::println);
     }
 
 
