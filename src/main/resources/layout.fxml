@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXBadge?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXDialog?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXListCell?>
-<?import com.jfoenix.controls.JFXMasonryPane?>
-<?import com.jfoenix.controls.JFXRadioButton?>
-<?import com.jfoenix.controls.JFXSlider?>
-<?import com.jfoenix.controls.JFXSpinner?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.layout.AnchorPane?>
-
-
-<AnchorPane prefHeight="439.0" prefWidth="573.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
-   <children>
-      <ButtonBar layoutX="30.0" layoutY="37.0" prefHeight="40.0" prefWidth="200.0">
-         <buttons>
-            <JFXSlider />
-         </buttons>
-      </ButtonBar>
-    <Button layoutX="162.0" layoutY="128.0" mnemonicParsing="false" text="Button" />
-      <JFXListCell layoutX="130.0" layoutY="77.0" />
-      <JFXHamburger layoutX="60.0" layoutY="101.0" />
-      <JFXBadge layoutX="75.0" layoutY="184.0" prefHeight="48.0" prefWidth="71.0" />
-      <JFXButton layoutX="162.0" layoutY="184.0" />
-      <JFXCheckBox layoutX="92.0" layoutY="262.0" />
-      <JFXDatePicker layoutX="76.0" layoutY="312.0" />
-      <JFXDialog layoutX="169.0" layoutY="384.0" />
-      <JFXMasonryPane layoutX="35.0" layoutY="370.0" />
-      <JFXRadioButton layoutX="353.0" layoutY="362.0" />
-      <JFXSpinner layoutX="440.0" layoutY="246.0" />
-   </children>
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+          minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="820.0"
+          xmlns="http://javafx.com/javafx/11.0.1">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints maxHeight="3530.0" minHeight="35.0" prefHeight="13.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="332.0" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <children>
+        <ComboBox editable="true" maxWidth="1200.0" prefHeight="25.0" prefWidth="631.0" GridPane.rowIndex="1"/>
+        <TableView tableMenuButtonVisible="true" GridPane.rowIndex="2">
+            <columns>
+                <TableColumn prefWidth="75.0" text="C1"/>
+                <TableColumn prefWidth="75.0" text="C2"/>
+            </columns>
+        </TableView>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+    <opaqueInsets>
+        <Insets/>
+    </opaqueInsets>
+</GridPane>
