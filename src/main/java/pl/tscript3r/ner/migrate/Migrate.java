@@ -1,13 +1,15 @@
 package pl.tscript3r.ner.migrate;
 
 import lombok.extern.slf4j.Slf4j;
+import pl.tscript3r.ner.client.ClientEntity;
 import pl.tscript3r.ner.migrate.utils.Progress;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.function.Consumer;
 
-import static pl.tscript3r.ner.migrate.Mappers.*;
+import static pl.tscript3r.ner.migrate.Mappers.clientEntityMapper;
 
 @Slf4j
 public class Migrate {
@@ -28,14 +30,11 @@ public class Migrate {
     }
 
     public void init() throws SQLException {
-        tableMigrate.sumRows(CLIENTS_TABLE, ITEMS_TABLE);
+        tableMigrate.sumRows(CLIENTS_TABLE, ITEMS_TABLE, ORDERS_TABLE);
     }
 
-    public void migrate() throws SQLException {
-        tableMigrate.migrate(CLIENTS_TABLE, clientEntityMapper, System.out::println);
-        tableMigrate.migrate(ITEMS_TABLE, itemEntityMapper, System.out::println);
-        tableMigrate.migrate(ORDERS_TABLE, orderEntityMapper, System.out::println);
+    public void migrateClients(Consumer<ClientEntity> clientEntityConsumer) throws SQLException {
+        tableMigrate.migrate(CLIENTS_TABLE, clientEntityMapper, clientEntityConsumer);
     }
-
 
 }

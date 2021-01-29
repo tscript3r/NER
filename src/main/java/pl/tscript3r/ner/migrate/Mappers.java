@@ -3,7 +3,7 @@ package pl.tscript3r.ner.migrate;
 import lombok.extern.slf4j.Slf4j;
 import pl.tscript3r.ner.client.ClientEntity;
 import pl.tscript3r.ner.item.ItemEntity;
-import pl.tscript3r.ner.order.OrderEntity;
+import pl.tscript3r.ner.order.OrderImported;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,20 +39,22 @@ public final class Mappers {
         return itemEntity;
     };
 
-    static Function<ResultSet, OrderEntity> orderEntityMapper = resultSet -> {
-        var orderEntity = new OrderEntity();
-        orderEntity.setDateOfReceipt(dateExceptionSuppressor(resultSet, 5));
-        orderEntity.setDescription(stringExceptionSuppressor(resultSet, 9));
+    static Function<ResultSet, OrderImported> orderImportedMapper = resultSet -> {
+        var orderImported = new OrderImported();
+        orderImported.setExternalId(integerExceptionSuppressor(resultSet, 1));
+        orderImported.setClientName(stringExceptionSuppressor(resultSet, 2));
+        orderImported.setDateOfReceipt(dateExceptionSuppressor(resultSet, 5));
+        orderImported.setDescription(stringExceptionSuppressor(resultSet, 9));
         var stringDate = stringExceptionSuppressor(resultSet, 10);
         if (stringDate != null && !stringDate.isEmpty()) {
             stringDate = normalizeStringDate(stringDate);
             try {
-                orderEntity.setDateOfCompletion(LocalDate.parse(stringDate, DateTimeFormatter.ofPattern("dd.MM.yy")));
+                orderImported.setDateOfCompletion(LocalDate.parse(stringDate, DateTimeFormatter.ofPattern("dd.MM.yy")));
             } catch (DateTimeException e) {
                 log.error(e.getMessage(), e);
             }
         }
-        return orderEntity;
+        return orderImported;
     };
 
     private static String normalizeStringDate(String input) {
