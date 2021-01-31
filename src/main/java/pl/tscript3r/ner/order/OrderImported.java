@@ -1,14 +1,14 @@
 package pl.tscript3r.ner.order;
 
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 
-@ToString
-@Setter
 @Getter
-public class OrderImported extends OrderEntity {
+@RequiredArgsConstructor
+public class OrderImported {
 
-    private String clientName;
+    private final Integer externalId;
+    private final Long clientId;
+    private final OrderEntity orderEntity;
 
 }

@@ -1,6 +1,6 @@
 package pl.tscript3r.ner.order;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+interface OrderRepository extends PagingAndSortingRepository<OrderEntity, Long> {
 }
