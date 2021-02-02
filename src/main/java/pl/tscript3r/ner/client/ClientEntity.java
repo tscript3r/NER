@@ -16,8 +16,6 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
-
-    private Integer externalId;
     private String company;
     private String contactName;
     private String street;

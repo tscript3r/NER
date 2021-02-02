@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,11 +16,12 @@ public class ClientFacade {
         clientRepository.save(clientEntity);
     }
 
-    public List<String> search(String string) {
-        return clientRepository.findAllByCompanyOrContactNameIsContaining(string, string)
-                .stream()
-                .map(ClientEntity::toSearchBoxItem)
-                .collect(Collectors.toList());
+    public List<ClientEntity> search(String string) {
+        return clientRepository.findAllByCompanyOrContactNameIsContaining(string, string);
+    }
+
+    public Optional<ClientEntity> getById(Long id) {
+        return clientRepository.findById(id);
     }
 
 }
