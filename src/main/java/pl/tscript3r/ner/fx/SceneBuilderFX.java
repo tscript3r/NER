@@ -9,11 +9,12 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import pl.tscript3r.ner.ApplicationLauncher;
-
+import pl.tscript3r.ner.fx.stage.LoadingStage;
 
 public class SceneBuilderFX extends Application {
 
     private ConfigurableApplicationContext context;
+    private LoadingStage loadingStage;
 
     @Override
     public void init() {
@@ -22,7 +23,10 @@ public class SceneBuilderFX extends Application {
             genericApplicationContext.registerBean(Parameters.class, this::getParameters);
             genericApplicationContext.registerBean(HostServices.class, this::getHostServices);
         };
-
+        Platform.runLater(() -> {
+            loadingStage = new LoadingStage();
+            loadingStage.show();
+        });
         this.context = new SpringApplicationBuilder().sources(ApplicationLauncher.class)
                 .initializers(initializer)
                 .build().run(getParameters()
@@ -33,6 +37,8 @@ public class SceneBuilderFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.context.publishEvent(new StageReadyEvent(primaryStage));
+        if (loadingStage != null)
+            loadingStage.hide();
     }
 
     @Override
