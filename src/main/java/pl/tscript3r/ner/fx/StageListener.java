@@ -36,24 +36,37 @@ public class StageListener implements ApplicationListener<StageReadyEvent> {
     @Override
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         try {
-            JMetro jMetro = new JMetro(Style.LIGHT);
-            Stage stage = stageReadyEvent.getStage();
-            URL url = fxml.getURL();
-            FXMLLoader fxmlLoader = new FXMLLoader(url);
-            fxmlLoader.setControllerFactory(applicationContext::getBean);
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 600, 600);
+            var stage = stageReadyEvent.getStage();
+            var root = loadFXML(fxml);
+            var scene = new Scene(root, 600, 600);
+            applySceneStyling(scene);
+            applyStageSettings(stage);
             stage.setScene(scene);
-            stage.getIcons().add(new Image(icon.getInputStream()));
-            stage.initStyle(StageStyle.UNIFIED);
-            jMetro.setAutomaticallyColorPanes(true);
-            jMetro.setScene(scene);
-            String applicationTitle = "NER";
-            stage.setTitle(applicationTitle);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void applySceneStyling(Scene scene) {
+        JMetro jMetro = new JMetro(Style.LIGHT);
+        jMetro.setAutomaticallyColorPanes(true);
+        jMetro.setScene(scene);
+
+    }
+
+    private void applyStageSettings(Stage stage) throws IOException {
+        stage.getIcons().add(new Image(icon.getInputStream()));
+        stage.initStyle(StageStyle.UNIFIED);
+        String applicationTitle = "NER";
+        stage.setTitle(applicationTitle);
+    }
+
+    private Parent loadFXML(Resource fxml) throws IOException {
+        URL url = fxml.getURL();
+        FXMLLoader fxmlLoader = new FXMLLoader(url);
+        fxmlLoader.setControllerFactory(applicationContext::getBean);
+        return fxmlLoader.load();
     }
 
 }
