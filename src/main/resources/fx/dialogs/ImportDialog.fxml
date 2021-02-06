@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane" maxHeight="180.0" maxWidth="500.0" minHeight="170.0"
+            minWidth="500.0" prefHeight="180.0" prefWidth="500.0"
+            style="-fx-background-color: white; -fx-border-color: #dadada;" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="pl.tscript3r.ner.fx.controller.importing.ImportDialogController">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="74.0" prefWidth="436.0" spacing="100.0" style="-fx-background-color: ffffff;"
+            BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefWidth="150.0" text="Nein" fx:id="disagreeButton"/>
+            <Button defaultButton="true" mnemonicParsing="false" prefWidth="150.0" text="Ja" fx:id="agreeButton"/>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <Pane style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="116.0" prefWidth="503.0" text="              Möchen Sie Ihre alte Daten importieren?"
+                   textAlignment="CENTER">
+               <font>
+                  <Font size="20.0"/>
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+   <opaqueInsets>
+      <Insets/>
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="5.0"/>
+   </padding>
+</BorderPane>
