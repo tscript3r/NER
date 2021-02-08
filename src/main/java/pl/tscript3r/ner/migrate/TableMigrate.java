@@ -31,9 +31,9 @@ class TableMigrate {
         Statement statement = connection.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
-        var resultSet = statement.executeQuery("SELECT * FROM " + table); // very old DB, COUNT wont work
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table); // very old DB, COUNT wont work
         resultSet.last();
-        var rowsCount = resultSet.getRow();
+        int rowsCount = resultSet.getRow();
         resultSet.close();
         return rowsCount;
     }
@@ -44,7 +44,7 @@ class TableMigrate {
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
         log.info("Executing 'SELECT * FROM {}' query", table);
-        var resultSet = statement.executeQuery("SELECT * FROM " + table);
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table);
         resultSet.first();
         while (resultSet.next()) {
             progress.inc();

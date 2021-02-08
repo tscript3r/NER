@@ -10,7 +10,7 @@ public class Progress {
 
     private final AtomicInteger totalCount = new AtomicInteger(0);
     private final AtomicInteger current = new AtomicInteger(0);
-    private final Consumer<Integer> onProgress;
+    private final Consumer<Double> onProgress;
 
     public void addTotalCount(int totalCount) {
         this.totalCount.set(this.totalCount.get() + totalCount);
@@ -18,7 +18,16 @@ public class Progress {
 
     public void inc() {
         current.set(current.get() + 1);
-        onProgress.accept(current.get());
+        double percentage = ((double) current.get() / totalCount.get());
+        onProgress.accept(percentage);
+    }
+
+    public Integer getCurrent() {
+        return current.get();
+    }
+
+    public Integer getTotalCount() {
+        return totalCount.get();
     }
 
 }

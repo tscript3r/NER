@@ -2,7 +2,11 @@ package pl.tscript3r.ner.migrate;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.tscript3r.ner.client.ClientEntity;
+import pl.tscript3r.ner.client.ClientImported;
 import pl.tscript3r.ner.item.ItemEntity;
+import pl.tscript3r.ner.item.ItemExternalRelations;
+import pl.tscript3r.ner.item.ItemImported;
+import pl.tscript3r.ner.order.OrderEntity;
 import pl.tscript3r.ner.order.OrderImported;
 
 import java.sql.ResultSet;
@@ -17,9 +21,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public final class Mappers {
 
-    static Function<ResultSet, ClientEntity> clientEntityMapper = resultSet -> {
-        var clientEntity = new ClientEntity();
-        clientEntity.setExternalId(integerExceptionSuppressor(resultSet, 1));
+    static Function<ResultSet, ClientImported> clientMapper = resultSet -> {
+        ClientEntity clientEntity = new ClientEntity();
         clientEntity.setCompany(stringExceptionSuppressor(resultSet, 2));
         clientEntity.setContactName(stringExceptionSuppressor(resultSet, 4));
         clientEntity.setStreet(stringExceptionSuppressor(resultSet, 5));
@@ -27,34 +30,45 @@ public final class Mappers {
         clientEntity.setState(stringExceptionSuppressor(resultSet, 7));
         clientEntity.setPostcode(stringExceptionSuppressor(resultSet, 8));
         clientEntity.setCountry(stringExceptionSuppressor(resultSet, 9));
-        return clientEntity;
+        return new ClientImported(longExceptionSuppressor(resultSet, 1), clientEntity);
     };
 
-    static Function<ResultSet, ItemEntity> itemEntityMapper = resultSet -> {
-        var itemEntity = new ItemEntity();
-        itemEntity.setExternalId(integerExceptionSuppressor(resultSet, 1));
+    static Function<ResultSet, ItemImported> itemEntityMapper = resultSet -> {
+        ItemEntity itemEntity = new ItemEntity();
+        Integer externalId = integerExceptionSuppressor(resultSet, 1);
+        ItemImported itemImported = new ItemImported(externalId, itemEntity);
         itemEntity.setName(stringExceptionSuppressor(resultSet, 2));
         itemEntity.setPrice(integerExceptionSuppressor(resultSet, 3));
         itemEntity.setDescription(stringExceptionSuppressor(resultSet, 4));
-        return itemEntity;
+        return itemImported;
     };
 
-    static Function<ResultSet, OrderImported> orderImportedMapper = resultSet -> {
-        var orderImported = new OrderImported();
-        orderImported.setExternalId(integerExceptionSuppressor(resultSet, 1));
-        orderImported.setClientName(stringExceptionSuppressor(resultSet, 2));
-        orderImported.setDateOfReceipt(dateExceptionSuppressor(resultSet, 5));
-        orderImported.setDescription(stringExceptionSuppressor(resultSet, 9));
-        var stringDate = stringExceptionSuppressor(resultSet, 10);
+    static Function<ResultSet, OrderImported> orderMapper = resultSet -> {
+        OrderEntity orderEntity = new OrderEntity();
+        OrderImported oderImported = new OrderImported(integerExceptionSuppressor(resultSet, 1),
+                longExceptionSuppressor(resultSet, 2), orderEntity);
+        orderEntity.setDateOfReceipt(dateExceptionSuppressor(resultSet, 5));
+        String description = stringExceptionSuppressor(resultSet, 9);
+        if (description != null && !description.isEmpty())
+            orderEntity.setDescription(description.replaceAll("[^A-Za-z0-9. ,]", ""));
+        String stringDate = stringExceptionSuppressor(resultSet, 10);
         if (stringDate != null && !stringDate.isEmpty()) {
             stringDate = normalizeStringDate(stringDate);
             try {
-                orderImported.setDateOfCompletion(LocalDate.parse(stringDate, DateTimeFormatter.ofPattern("dd.MM.yy")));
+                orderEntity.setDateOfCompletion(LocalDate.parse(stringDate, DateTimeFormatter.ofPattern("dd.MM.yy")));
             } catch (DateTimeException e) {
-                log.error(e.getMessage(), e);
+                log.error("Could not parse date for order with external ID: {}, error message: {}",
+                        oderImported.getExternalId(), e.getMessage());
             }
         }
-        return orderImported;
+        return oderImported;
+    };
+
+    static Function<ResultSet, ItemExternalRelations> itemRelationsMapper = resultSet -> {
+        Integer itemId = integerExceptionSuppressor(resultSet, 3);
+        Integer quantity = integerExceptionSuppressor(resultSet, 4);
+        Integer orderId = integerExceptionSuppressor(resultSet, 2);
+        return new ItemExternalRelations(orderId, itemId, quantity);
     };
 
     private static String normalizeStringDate(String input) {
@@ -78,6 +92,15 @@ public final class Mappers {
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return -1;
+        }
+    }
+
+    private static Long longExceptionSuppressor(ResultSet resultSet, int column) {
+        try {
+            return resultSet.getLong(column);
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            return -1L;
         }
     }
 
