@@ -1,6 +1,8 @@
 package pl.tscript3r.ner.client;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,9 @@ public class ClientFacade {
         clientRepository.save(clientEntity);
     }
 
-    public List<ClientEntity> search(String string) {
-        return clientRepository.findAllByCompanyOrContactNameIsContaining(string, string);
+    public List<ClientEntity> search(String searchFraze, Integer limit) {
+        return clientRepository.findByPhrase(searchFraze,
+                PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     public Optional<ClientEntity> getById(Long id) {
