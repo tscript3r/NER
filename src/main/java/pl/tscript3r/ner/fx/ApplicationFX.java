@@ -9,23 +9,24 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import pl.tscript3r.ner.ApplicationLauncher;
-import pl.tscript3r.ner.fx.stage.LoadingStage;
+import pl.tscript3r.ner.fx.dispatch.event.StageReadyEvent;
+import pl.tscript3r.ner.fx.window.LoadingWindow;
 
-public class SceneBuilderFX extends Application {
+public class ApplicationFX extends Application {
 
     private ConfigurableApplicationContext context;
-    private LoadingStage loadingStage;
+    private LoadingWindow loadingWindow;
 
     @Override
     public void init() {
         ApplicationContextInitializer<GenericApplicationContext> initializer = genericApplicationContext -> {
-            genericApplicationContext.registerBean(Application.class, () -> SceneBuilderFX.this);
+            genericApplicationContext.registerBean(Application.class, () -> ApplicationFX.this);
             genericApplicationContext.registerBean(Parameters.class, this::getParameters);
             genericApplicationContext.registerBean(HostServices.class, this::getHostServices);
         };
         Platform.runLater(() -> {
-            loadingStage = new LoadingStage();
-            loadingStage.show();
+            loadingWindow = new LoadingWindow();
+            loadingWindow.show();
         });
         this.context = new SpringApplicationBuilder().sources(ApplicationLauncher.class)
                 .initializers(initializer)
@@ -36,9 +37,9 @@ public class SceneBuilderFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.context.publishEvent(new StageReadyEvent(primaryStage));
-        if (loadingStage != null)
-            loadingStage.hide();
+        this.context.publishEvent(StageReadyEvent.get(primaryStage));
+        if (loadingWindow != null)
+            loadingWindow.hide();
     }
 
     @Override
