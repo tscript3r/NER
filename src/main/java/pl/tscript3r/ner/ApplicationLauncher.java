@@ -2,13 +2,15 @@ package pl.tscript3r.ner;
 
 import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.tscript3r.ner.fx.SceneBuilderFX;
+import org.springframework.cache.annotation.EnableCaching;
+import pl.tscript3r.ner.fx.ApplicationFX;
 
 @SpringBootApplication
+@EnableCaching
 public class ApplicationLauncher {
 
     public static void main(String[] args) {
-        Application.launch(SceneBuilderFX.class, args);
+        Application.launch(ApplicationFX.class, args);
     }
 
 }
