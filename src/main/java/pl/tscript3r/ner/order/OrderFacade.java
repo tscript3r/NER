@@ -22,8 +22,8 @@ public class OrderFacade {
     }
 
     @Cacheable("latestOrders")
-    public List<OrderEntity> getLatest() {
-        return orderRepository.findAll(PageRequest.of(0, 200, Sort.by(Sort.Direction.DESC, "id"))).toList();
+    public List<OrderEntity> getLatest(Double orderCount) {
+        return orderRepository.findAll(PageRequest.of(0, orderCount.intValue(), Sort.by(Sort.Direction.DESC, "id"))).toList();
     }
 
     @Cacheable("clientsOrders")

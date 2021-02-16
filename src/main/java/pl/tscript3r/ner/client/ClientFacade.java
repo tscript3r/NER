@@ -18,9 +18,9 @@ public class ClientFacade {
         clientRepository.save(clientEntity);
     }
 
-    public List<ClientEntity> search(String searchFraze, Integer limit) {
+    public List<ClientEntity> search(String searchFraze, Double limit) {
         return clientRepository.findByPhrase(searchFraze,
-                PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id")));
+                PageRequest.of(0, limit.intValue(), Sort.by(Sort.Direction.DESC, "id")));
     }
 
     public Optional<ClientEntity> getById(Long id) {

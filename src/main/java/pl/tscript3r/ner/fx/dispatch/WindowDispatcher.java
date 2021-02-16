@@ -10,10 +10,10 @@ import pl.tscript3r.ner.fx.controller.importing.ImportProgressController;
 import pl.tscript3r.ner.fx.dispatch.event.AbstractEvent;
 import pl.tscript3r.ner.fx.dispatch.event.ImportEvent;
 import pl.tscript3r.ner.fx.dispatch.event.StageReadyEvent;
-import pl.tscript3r.ner.fx.stage.WindowContainer;
-import pl.tscript3r.ner.fx.stage.Windows;
+import pl.tscript3r.ner.fx.window.WindowContainer;
+import pl.tscript3r.ner.fx.window.Windows;
 
-import static pl.tscript3r.ner.fx.stage.Windows.*;
+import static pl.tscript3r.ner.fx.window.Windows.*;
 
 @Slf4j
 @Component

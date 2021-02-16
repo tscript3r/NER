@@ -2,10 +2,7 @@ package pl.tscript3r.ner.fx.controller.main;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 import pl.tscript3r.ner.fx.util.SearchFacade;
@@ -16,6 +13,9 @@ import java.time.LocalDate;
 
 @Component
 public class MainController implements DisposableBean {
+
+    private final int TABLE_ROWS = 200;
+    private double lastSliderValue = -1;
 
     private final SearchFacade searchFacade;
     private SearchTextField searchField;
@@ -29,6 +29,9 @@ public class MainController implements DisposableBean {
     @FXML
     private ProgressIndicator progressIndicator;
 
+    @FXML
+    private Slider slider;
+
     public MainController(SearchFacade searchFacade) {
         this.searchFacade = searchFacade;
     }
@@ -38,6 +41,7 @@ public class MainController implements DisposableBean {
         searchField = new SearchTextField(textField, this::updateRows);
         addColumns();
         addInitialRows();
+        initializeSlider();
     }
 
     private void addColumns() {
@@ -111,6 +115,20 @@ public class MainController implements DisposableBean {
     @Override
     public void destroy() {
         searchField.destroy();
+    }
+
+    private void initializeSlider() {
+        slider.setValue(TABLE_ROWS);
+        slider.setMin(100);
+        slider.setValue(200);
+        slider.setMax(500);
+        slider.setOnMouseClicked(event -> {
+            if (lastSliderValue != slider.getValue()) {
+                searchFacade.setRowLimit(slider.getValue());
+                updateRows(textField.getText());
+                lastSliderValue = slider.getValue();
+            }
+        });
     }
 
 }
