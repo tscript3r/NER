@@ -1,6 +1,7 @@
 package pl.tscript3r.ner.fx.window;
 
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,14 @@ public class WindowContainer {
         return build(new Stage(), window);
     }
 
-    ;
+    public Long buildModal(Stage parentStage, Windows window) {
+        Long id = build(window);
+        Stage stage = windowsMap.get(id).getStage();
+        stage.initOwner(parentStage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        return id;
+    }
 
     public Long build(Stage stage, Windows window) {
         try {
@@ -107,4 +115,21 @@ public class WindowContainer {
     public Stage getStageById(Long id) {
         return windowsMap.get(id).getStage();
     }
+
+    public Optional<Stage> getStageByWindowType(Windows windows) {
+        return windowsMap.values().stream()
+                .filter(windowWrapper -> windowWrapper.getStageType() == windows)
+                .map(WindowWrapper::getStage)
+                .findFirst();
+    }
+
+    public void showAndWait(Long id) {
+        Optional<WindowWrapper> windowWrapperOptional = getById(id);
+        if (windowWrapperOptional.isPresent()) {
+            WindowWrapper windowWrapper = windowWrapperOptional.get();
+            windowWrapper.getStage().showAndWait();
+        } else
+            publishNotFoundException(id);
+    }
+
 }

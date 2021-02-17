@@ -6,12 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import pl.tscript3r.ner.config.ConfigurationFacade;
+import pl.tscript3r.ner.exception.NERException;
 import pl.tscript3r.ner.fx.controller.importing.ImportProgressController;
-import pl.tscript3r.ner.fx.dispatch.event.AbstractEvent;
-import pl.tscript3r.ner.fx.dispatch.event.ImportEvent;
-import pl.tscript3r.ner.fx.dispatch.event.StageReadyEvent;
+import pl.tscript3r.ner.fx.dispatch.event.*;
 import pl.tscript3r.ner.fx.window.WindowContainer;
 import pl.tscript3r.ner.fx.window.Windows;
+
+import java.util.Optional;
 
 import static pl.tscript3r.ner.fx.window.Windows.*;
 
@@ -45,6 +46,24 @@ public class WindowDispatcher implements ApplicationListener<AbstractEvent<?>> {
 
         if (abstractEvent instanceof ImportEvent)
             handleImportEvent((ImportEvent) abstractEvent);
+
+        if (abstractEvent instanceof FormEvent)
+            handleFormEvent((FormEvent) abstractEvent);
+    }
+
+    private void handleFormEvent(FormEvent formEvent) {
+        if (formEvent.get() == FormEventType.CLIENT) {
+            showModal(FORM_CLIENT);
+        }
+    }
+
+    private void showModal(Windows formClient) {
+        Optional<Stage> stageOptional = windowContainer.getStageByWindowType(MAIN);
+        if (stageOptional.isPresent()) {
+            Long id = windowContainer.buildModal(stageOptional.get(), formClient);
+            windowContainer.showAndWait(id);
+        } else
+            throw new NERException("Could not find parent stage");
     }
 
     private void handleStageReadyEvent(StageReadyEvent stageReadyEvent) {

@@ -4,12 +4,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.tscript3r.ner.fx.dispatch.event.FormEvent;
 import pl.tscript3r.ner.fx.util.SearchFacade;
 import pl.tscript3r.ner.fx.util.SearchTextField;
 import pl.tscript3r.ner.order.OrderEntity;
 
 import java.time.LocalDate;
+
+import static pl.tscript3r.ner.fx.dispatch.event.FormEventType.CLIENT;
 
 @Component
 public class MainController implements DisposableBean {
@@ -18,6 +22,8 @@ public class MainController implements DisposableBean {
     private double lastSliderValue = -1;
 
     private final SearchFacade searchFacade;
+    private final ApplicationContext applicationContext;
+
     private SearchTextField searchField;
 
     @FXML
@@ -32,8 +38,12 @@ public class MainController implements DisposableBean {
     @FXML
     private Slider slider;
 
-    public MainController(SearchFacade searchFacade) {
+    @FXML
+    private Button newClientButton;
+
+    public MainController(SearchFacade searchFacade, ApplicationContext applicationContext) {
         this.searchFacade = searchFacade;
+        this.applicationContext = applicationContext;
     }
 
     @FXML
@@ -42,6 +52,11 @@ public class MainController implements DisposableBean {
         addColumns();
         addInitialRows();
         initializeSlider();
+        initializeButtons();
+    }
+
+    private void initializeButtons() {
+        newClientButton.setOnMouseClicked(event -> applicationContext.publishEvent(FormEvent.get(CLIENT)));
     }
 
     private void addColumns() {

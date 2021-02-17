@@ -6,8 +6,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.Getter;
 
-import static javafx.stage.StageStyle.TRANSPARENT;
-import static javafx.stage.StageStyle.UNIFIED;
+import static javafx.stage.StageStyle.*;
 
 @Getter
 public enum Windows {
@@ -15,7 +14,8 @@ public enum Windows {
     MAIN("main/Main", "NER", 600, 600, UNIFIED),
     IMPORT_DIALOG("dialogs/ImportDialog", "Import", 170, 500, TRANSPARENT),
     IMPORT_FILE("dialogs/ImportFile", "Import", 224, 600, TRANSPARENT),
-    IMPORT_PROGRESS("dialogs/ImportProgress", "Import", 100, 500, TRANSPARENT);
+    IMPORT_PROGRESS("dialogs/ImportProgress", "Import", 100, 500, TRANSPARENT),
+    FORM_CLIENT("forms/ClientForm", "Kunde", 474, 650, UTILITY);
 
     private final String uri;
     private final String title;

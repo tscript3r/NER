@@ -30,8 +30,9 @@
                 <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
                         <Button defaultButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="324.0"
-                                text="Neue Kunde"/>
-                        <Button defaultButton="true" mnemonicParsing="false" prefHeight="25.0" text="Neues Auftrag"/>
+                                text="Neue Kunde" fx:id="newClientButton"/>
+                        <Button defaultButton="true" mnemonicParsing="false" prefHeight="25.0" text="Neues Auftrag"
+                                fx:id="newOrderButton"/>
                     </buttons>
                 </ButtonBar>
                 <ButtonBar prefHeight="33.0" prefWidth="510.0">
