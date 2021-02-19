@@ -3,19 +3,17 @@ package pl.tscript3r.ner.item;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.tscript3r.ner.db.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 @Setter
 @Getter
 @ToString
 @Entity
-public class ItemEntity {
+public class ItemEntity extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
-    private Long id;
     private String name;
     private Integer price;
     private Integer quantity;
