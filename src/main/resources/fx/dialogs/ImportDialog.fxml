@@ -10,7 +10,7 @@
             style="-fx-background-color: white; -fx-border-color: #dadada;" xmlns="http://javafx.com/javafx/11.0.1"
             fx:controller="pl.tscript3r.ner.fx.controller.importing.ImportDialogController">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="74.0" prefWidth="436.0" spacing="100.0" style="-fx-background-color: ffffff;"
+      <HBox alignment="CENTER" prefHeight="74.0" prefWidth="438.0" spacing="100.0" style="-fx-background-color: ffffff;"
             BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" prefWidth="150.0" text="Nein" fx:id="disagreeButton"/>
