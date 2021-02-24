@@ -13,15 +13,15 @@
       <HBox alignment="CENTER" prefHeight="74.0" prefWidth="438.0" spacing="100.0" style="-fx-background-color: ffffff;"
             BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefWidth="150.0" text="Nein" fx:id="disagreeButton"/>
-            <Button defaultButton="true" mnemonicParsing="false" prefWidth="150.0" text="Ja" fx:id="agreeButton"/>
+            <Button fx:id="disagreeButton" mnemonicParsing="false" prefWidth="150.0" text="Nein"/>
+            <Button fx:id="agreeButton" defaultButton="true" mnemonicParsing="false" prefWidth="150.0" text="Ja"/>
          </children>
       </HBox>
    </bottom>
    <center>
       <Pane style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="116.0" prefWidth="503.0" text="              Möchen Sie Ihre alte Daten importieren?"
+            <Label layoutX="72.0" prefHeight="116.0" prefWidth="431.0" text="Möchen Sie Ihre alte Daten importieren?"
                    textAlignment="CENTER">
                <font>
                   <Font size="20.0"/>
