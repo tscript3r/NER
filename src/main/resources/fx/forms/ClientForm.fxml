@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.*?>
 <Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="450.0" prefWidth="643.0" style="-fx-background-color: white"
-      xmlns="http://javafx.com/javafx/11.0.1">
+      xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="pl.tscript3r.ner.fx.controller.form.ClientFormController">
    <children>
       <GridPane alignment="CENTER" layoutX="1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                 minWidth="-Infinity" prefHeight="405.0" prefWidth="645.0" style="-fx-background-color: white;">
@@ -24,10 +25,10 @@
          <children>
             <Label text="Firma:"/>
             <TextField GridPane.columnIndex="1"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="contactTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="streetTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="cityTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="postcodeTextField"/>
             <Label text="Kontaktperson:" GridPane.rowIndex="1"/>
             <Label text="Strasse:" GridPane.rowIndex="2"/>
             <Label text="Ort:" GridPane.rowIndex="3"/>
@@ -41,9 +42,9 @@
          </padding>
       </GridPane>
       <Button layoutX="175.0" layoutY="411.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0"
-              text="Abbrechen"/>
+              text="Abbrechen" fx:id="abortButton"/>
       <Button defaultButton="true" layoutX="331.0" layoutY="411.0" mnemonicParsing="false" prefHeight="25.0"
-              prefWidth="137.0" text="Hinzufügen"/>
+              prefWidth="137.0" text="Hinzufügen" fx:id="applyButton"/>
    </children>
    <padding>
       <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
